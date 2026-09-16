@@ -1,0 +1,23 @@
+<svg width="640" height="480" viewBox="0 0 640 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="480" rx="32" fill="#EFF6FF"/>
+  <circle cx="500" cy="118" r="62" fill="#DBEAFE"/>
+  <circle cx="120" cy="110" r="48" fill="#E0E7FF"/>
+  <rect x="72" y="140" width="496" height="250" rx="26" fill="white" stroke="#D7E7FF" stroke-width="2"/>
+  <rect x="112" y="174" width="188" height="18" rx="9" fill="#BFDBFE"/>
+  <rect x="112" y="214" width="152" height="18" rx="9" fill="#DBEAFE"/>
+  <rect x="112" y="254" width="210" height="18" rx="9" fill="#DBEAFE"/>
+  <rect x="370" y="174" width="148" height="122" rx="20" fill="#2563EB"/>
+  <path d="M412 230C412 205.967 431.967 186 456 186H470C494.033 186 514 205.967 514 230V242H412V230Z" fill="#93C5FD"/>
+  <circle cx="462" cy="202" r="26" fill="#E0F2FE"/>
+  <rect x="386" y="310" width="116" height="18" rx="9" fill="#DBEAFE"/>
+  <rect x="112" y="304" width="168" height="52" rx="16" fill="#EFF6FF"/>
+  <rect x="134" y="322" width="124" height="14" rx="7" fill="#93C5FD"/>
+  <path d="M160 115L182 92L210 120L244 80L288 126" stroke="#2563EB" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="160" cy="115" r="10" fill="#2563EB"/>
+  <circle cx="182" cy="92" r="10" fill="#2563EB"/>
+  <circle cx="210" cy="120" r="10" fill="#2563EB"/>
+  <circle cx="244" cy="80" r="10" fill="#2563EB"/>
+  <circle cx="288" cy="126" r="10" fill="#2563EB"/>
+  <rect x="22" y="352" width="160" height="36" rx="18" fill="#DBEAFE"/>
+  <rect x="458" y="344" width="120" height="40" rx="20" fill="#DBEAFE"/>
+</svg>
