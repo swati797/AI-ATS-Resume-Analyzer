@@ -20,12 +20,12 @@ app.use('/api/interviews', require('./routes/interviewRoutes'))
 app.use('/api/placements', require('./routes/placementRoutes'))
 app.use('/api/notifications', require('./routes/notificationRoutes'))
 app.use('/api/stats', require('./routes/statsRoutes'))
-
+app.use('/api/resume', require('./routes/resumeRoutes'))
 // Error handler
 app.use((err, req, res, next) => {
   console.error(err.stack)
-  res.status(500).json({message: err.message})
+  res.status(500).json({ message: err.message })
 })
 
 const PORT = process.env.PORT || 5000
-app.listen(PORT, ()=> console.log(`Server running on port ${PORT}`))
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`))

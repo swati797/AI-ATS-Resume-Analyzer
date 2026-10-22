@@ -1,124 +1,243 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
-export default function Home(){
-  const dummyStats = [
-    {title:'Students', value:'500+', icon:'👩‍🎓'},
-    {title:'Companies', value:'50+', icon:'🏢'},
-    {title:'Jobs', value:'100+', icon:'💼'},
-    {title:'Placement Rate', value:'85%', icon:'📈'}
-  ]
+const FEATURES = [
+  {
+    icon: '👤',
+    title: 'Student Dashboard',
+    desc: 'Manage your profile, applications and placement journey.',
+    color: '#2563EB',
+    bg: '#EFF6FF',
+  },
+  {
+    icon: '💼',
+    title: 'Job Opportunities',
+    desc: 'Explore latest job openings from top companies.',
+    color: '#059669',
+    bg: '#ECFDF5',
+  },
+  {
+    icon: '📄',
+    title: 'ATS Resume Analyzer',
+    desc: 'Optimize your resume and improve your chances of getting shortlisted.',
+    color: '#7C3AED',
+    bg: '#F5F3FF',
+  },
+  {
+    icon: '📋',
+    title: 'Application Tracking',
+    desc: 'Track your applications and stay updated in real-time.',
+    color: '#DC2626',
+    bg: '#FEF2F2',
+  },
+  {
+    icon: '📅',
+    title: 'Interview Scheduling',
+    desc: 'Book and manage your interviews with ease.',
+    color: '#D97706',
+    bg: '#FFFBEB',
+  },
+  {
+    icon: '📊',
+    title: 'Placement Analytics',
+    desc: 'View insights and track placement performance.',
+    color: '#0891B2',
+    bg: '#ECFEFF',
+  },
+]
 
-  const features = [
-    'Student Management',
-    'Job Opportunities',
-    'Application Management',
-    'Recruiter Management',
-    'Placement Tracking',
-    'Notifications'
-  ]
+const STEPS = [
+  { num: '1', icon: '👤', title: 'Create Your Profile', desc: 'Sign up and complete your profile with your details.' },
+  { num: '2', icon: '🔍', title: 'Explore Opportunities', desc: 'Browse through the latest job openings from top companies.' },
+  { num: '3', icon: '📝', title: 'Apply & Track', desc: 'Submit your applications and track your progress.' },
+  { num: '4', icon: '⭐', title: 'Get Placed', desc: 'Attend interviews and secure your dream job.' },
+]
+
+/* ---------- Intersection Observer hook for scroll animations ---------- */
+function useOnScreen(options) {
+  const ref = useRef(null)
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setVisible(true)
+    }, { threshold: 0.12, ...options })
+    if (ref.current) obs.observe(ref.current)
+    return () => obs.disconnect()
+  }, [])
+  return [ref, visible]
+}
+
+function AnimatedSection({ children, className = '', delay = 0 }) {
+  const [ref, visible] = useOnScreen()
+  return (
+    <div
+      ref={ref}
+      className={`anim-section ${visible ? 'anim-visible' : ''} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  )
+}
+
+export default function Home() {
+  useEffect(() => { document.title = 'Placement Management System — Home' }, [])
 
   return (
     <>
-      <section className="hero-section">
+      {/* ── Hero ────────────────────────────────────────── */}
+      <section className="hp-hero">
         <div className="container">
-          <div className="hero-card">
+          <div className="hp-hero-card">
             <div className="row align-items-center g-4">
-              <div className="col-lg-7">
-                <p className="eyebrow">Campus Career Hub</p>
-                <h1 className="hero-title">Web-Based Placement Management System</h1>
-                <p className="hero-sub">Connecting Students with Career Opportunities</p>
-                <div className="hero-actions">
-                  <Link to="/jobs" className="btn btn-primary btn-lg">Explore Jobs</Link>
-                  <Link to="/login" className="btn btn-outline-primary btn-lg">Student Login</Link>
-                  <Link to="/recruiter/login" className="btn btn-secondary btn-lg">Recruiter Login</Link>
-                </div>
+              <div className="col-lg-6">
+                <AnimatedSection>
+                  <span className="hp-badge-pill">Your Career • Our Priority</span>
+                  <h1 className="hp-hero-title">
+                    Placement Management System for a{' '}
+                    <span className="hp-gradient-text">Brighter Future</span>
+                  </h1>
+                  <p className="hp-hero-sub">
+                    Connect, Apply, Grow. Our platform helps students find the right opportunities,
+                    track applications and build a successful career with ease.
+                  </p>
+                  <div className="hp-hero-actions">
+                    <Link to="/register" className="btn btn-primary btn-lg hp-btn-glow">
+                      Get Started <span aria-hidden="true">→</span>
+                    </Link>
+                    <Link to="/jobs" className="btn btn-outline-primary btn-lg">
+                      Explore Jobs
+                    </Link>
+                  </div>
+                </AnimatedSection>
               </div>
 
-              <div className="col-lg-5">
-                <div className="hero-visual">
-                  <img src="/hero-illustration.svg" alt="Career placement illustration" className="hero-image" />
-                </div>
+              <div className="col-lg-6">
+                <AnimatedSection delay={200}>
+                  <div className="hp-hero-visual">
+                    <img
+                      src="/hero-illustration.svg"
+                      alt="Career placement illustration showing a person working on a laptop with analytics"
+                      className="hp-hero-img"
+                      width="560"
+                      height="420"
+                    />
+                  </div>
+                </AnimatedSection>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="stats-section py-5">
+      {/* ── Stats ───────────────────────────────────────── */}
+      <section className="hp-stats">
         <div className="container">
           <div className="row g-3">
-            {dummyStats.map((s)=> (
-              <div key={s.title} className="col-md-6 col-lg-3">
-                <div className="stat-card">
-                  <div className="stat-icon">{s.icon}</div>
-                  <div className="stat-label">{s.title}</div>
-                  <div className="stat-value">{s.value}</div>
-                </div>
+            {[
+              { icon: '💼', value: '500+', label: 'Active Job Opportunities' },
+              { icon: '🏢', value: '100+', label: 'Hiring Companies' },
+              { icon: '👥', value: '800+', label: 'Students Placed' },
+              { icon: '📈', value: '95%', label: 'Placement Success Rate' },
+            ].map((s, i) => (
+              <div key={s.label} className="col-6 col-lg-3">
+                <AnimatedSection delay={i * 100}>
+                  <div className="hp-stat-card">
+                    <div className="hp-stat-icon">{s.icon}</div>
+                    <div>
+                      <div className="hp-stat-value">{s.value}</div>
+                      <div className="hp-stat-label">{s.label}</div>
+                    </div>
+                  </div>
+                </AnimatedSection>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="content-section py-5">
+      {/* ── Features ────────────────────────────────────── */}
+      <section className="hp-features">
         <div className="container">
+          <AnimatedSection>
+            <div className="hp-section-header">
+              <span className="hp-kicker">Our Features</span>
+              <h2 className="hp-section-title">Everything You Need for a Successful Placement</h2>
+              <p className="hp-section-sub">
+                Powerful tools to help students, recruiters and placement cells work together efficiently.
+              </p>
+            </div>
+          </AnimatedSection>
+
           <div className="row g-4">
-            <div className="col-lg-6">
-              <div className="info-card h-100">
-                <div className="section-heading">
-                  <span className="section-kicker">About us</span>
-                  <h3>About Placement Cell</h3>
-                </div>
-                <p>
-                  Our placement cell connects students with leading companies and provides career guidance,
-                  internship support, and structured recruitment opportunities to help them confidently step into the professional world.
-                </p>
-                <div className="about-image-wrap mt-4">
-                  <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80" alt="Students collaborating" className="about-image" />
-                </div>
-              </div>
-            </div>
-
-            <div className="col-lg-6">
-              <div className="info-card h-100">
-                <div className="section-heading">
-                  <span className="section-kicker">Process</span>
-                  <h3>How It Works</h3>
-                </div>
-                <div className="steps-list">
-                  <div className="step-item"><span>1</span><div>Register</div></div>
-                  <div className="step-item"><span>2</span><div>Complete Profile</div></div>
-                  <div className="step-item"><span>3</span><div>Apply for Jobs</div></div>
-                  <div className="step-item"><span>4</span><div>Get Placed</div></div>
-                </div>
-                <div className="mini-visual mt-4">
-                  <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80" alt="Recruitment process" className="mini-image" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="row mt-4">
-            <div className="col-12">
-              <div className="info-card">
-                <div className="section-heading">
-                  <span className="section-kicker">Features</span>
-                  <h3>Portal Highlights</h3>
-                </div>
-                <div className="row g-3 features-grid">
-                  {features.map((feature)=> (
-                    <div key={feature} className="col-md-6 col-lg-4">
-                      <div className="feature-card">
-                        <div className="feature-icon">✓</div>
-                        <div>{feature}</div>
-                      </div>
+            {FEATURES.map((f, i) => (
+              <div key={f.title} className="col-md-6 col-lg-4">
+                <AnimatedSection delay={i * 80}>
+                  <div className="hp-feature-card">
+                    <div className="hp-feature-icon" style={{ background: f.bg, color: f.color }}>
+                      <span>{f.icon}</span>
                     </div>
-                  ))}
-                </div>
+                    <h3 className="hp-feature-title">{f.title}</h3>
+                    <p className="hp-feature-desc">{f.desc}</p>
+                    <span className="hp-feature-arrow" style={{ color: f.color }}>→</span>
+                  </div>
+                </AnimatedSection>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── How It Works ────────────────────────────────── */}
+      <section className="hp-how">
+        <div className="container">
+          <AnimatedSection>
+            <div className="hp-section-header">
+              <span className="hp-kicker">How It Works</span>
+              <h2 className="hp-section-title">Get Placed in 4 Simple Steps</h2>
+              <p className="hp-section-sub">Follow these simple steps to kickstart your career journey.</p>
+            </div>
+          </AnimatedSection>
+
+          <div className="row g-4 hp-steps-row">
+            {STEPS.map((step, i) => (
+              <div key={step.num} className="col-md-6 col-lg-3">
+                <AnimatedSection delay={i * 120}>
+                  <div className="hp-step-card">
+                    <div className="hp-step-top">
+                      <span className="hp-step-num">{step.num}</span>
+                      <span className="hp-step-icon">{step.icon}</span>
+                    </div>
+                    {i < STEPS.length - 1 && <span className="hp-step-arrow d-none d-lg-block">→</span>}
+                    <h4 className="hp-step-title">{step.title}</h4>
+                    <p className="hp-step-desc">{step.desc}</p>
+                  </div>
+                </AnimatedSection>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ─────────────────────────────────────────── */}
+      <section className="hp-cta">
+        <div className="container">
+          <AnimatedSection>
+            <div className="hp-cta-card">
+              <h2 className="hp-cta-title">Ready to Launch Your Career?</h2>
+              <p className="hp-cta-sub">
+                Join hundreds of students who found their dream job through our placement portal.
+              </p>
+              <div className="hp-cta-actions">
+                <Link to="/register" className="btn btn-primary btn-lg hp-btn-glow">
+                  Create Your Account
+                </Link>
+                <Link to="/about" className="btn btn-outline-primary btn-lg">
+                  Learn More
+                </Link>
               </div>
             </div>
-          </div>
+          </AnimatedSection>
         </div>
       </section>
     </>
